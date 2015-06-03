@@ -6,10 +6,7 @@ It allows you to count the number of times that an entry has been viewed.
 
 ##Twig Tags
 
-The following twig tags are supported:
-
-- count(entry.id)
-
+**count(entry.id)**
 
     {% set count = craft.entryCount.count(entry.id) %}
 
@@ -17,8 +14,7 @@ The following twig tags are supported:
     First count: {{ count.dateCreated }}
     Last count: {{ count.dateUpdated }}
 
-- entries
-
+**entries**
 
     {% set countedEntries = craft.entryCount.entries %}
 
@@ -27,7 +23,6 @@ The following twig tags are supported:
         {{ entry.title }} ({{ count }} views)
     {% endfor %}
 
-- increment(entry.id)
-
+**increment(entry.id)**
 
     {% do craft.entryCount.increment(entry.id) %}
