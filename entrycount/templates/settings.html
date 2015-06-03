@@ -1,0 +1,26 @@
+{% import "_includes/forms" as forms %}
+
+
+{{ forms.lightswitchField({
+	label: "Show count on entry index pages"|t,
+	instructions: "Will add a new column for the entry count on the entry index pages"|t,
+	name: 'showCountOnEntryIndex',
+	on: settings.showCountOnEntryIndex,
+}) }}
+
+
+{{ forms.lightswitchField({
+	label: "Ignore logged in users"|t,
+	instructions: "Only increment counts if users are not logged in"|t,
+	name: 'ignoreLoggedInUsers',
+	on: settings.ignoreLoggedInUsers,
+}) }}
+
+
+{{ forms.textareaField({
+	label: "Ignore IP addresses"|t,
+	instructions: "Add one IP address per line to ignore them when incrementing counts"|t,
+	name: 'ignoreIpAddresses',
+	value: settings.ignoreIpAddresses,
+	rows: 4,
+}) }}
