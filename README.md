@@ -1,4 +1,4 @@
-#Craft Entry Count Plugin
+#Entry Count Plugin
 
 The Entry Count Plugin was built specifically for training purposes and is used in the [Craft Plugin Development video course](https://mijingo.com/products/screencasts/craft-plugin-development/).
 
