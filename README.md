@@ -4,6 +4,16 @@ The Entry Count Plugin was built specifically for training purposes and is used 
 
 It allows you to count and display the number of times that an entry has been viewed.
 
+## Requirements
+
+This plugin requires Craft CMS 3.0.0 or later.
+
+## Installation
+
+To install the plugin, search for "Entry Count" in the Craft Plugin Store, or install manually using composer.
+
+    composer require putyourlightson/entry-count
+
 ## Twig Tags
 
 **count(entry.id)**
