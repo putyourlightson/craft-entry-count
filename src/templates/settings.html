@@ -1,0 +1,18 @@
+{% import "_includes/forms" as forms %}
+
+
+{{ forms.lightswitchField({
+	label: "Ignore logged in users"|t('entry-count'),
+	instructions: "Only increment counts if users are not logged in"|t('entry-count'),
+	name: 'ignoreLoggedInUsers',
+	on: settings.ignoreLoggedInUsers,
+	first: true,
+}) }}
+
+{{ forms.textareaField({
+	label: "Ignore IP addresses"|t('entry-count'),
+	instructions: "Add one IP address per line to ignore them when incrementing counts"|t('entry-count'),
+	name: 'ignoreIpAddresses',
+	value: settings.ignoreIpAddresses,
+	rows: 4,
+}) }}

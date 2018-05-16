@@ -1,21 +1,21 @@
 {% extends "_layouts/cp" %}
 
-{% set title = "Entry Count"|t %}
+{% set title = "Entry Count"|t('entry-count') %}
 
-{% set entries = craft.entryCount.entries %}
+{% set entries = craft.entryCount.entries.all() %}
 
 
 {% block content %}
 
-    {% if entries.total %}
+    {% if entries|length %}
         <table class="data fullwidth">
             <thead>
                 <tr>
-                    <th>{{ "Entry"|t }}</th>
-                    <th>{{ "URL"|t }}</th>
-                    <th>{{ "Count"|t }}</th>
-                    <th>{{ "First Count"|t }}</th>
-                    <th>{{ "Last Count"|t }}</th>
+                    <th>{{ "Entry"|t('entry-count') }}</th>
+                    <th>{{ "URL"|t('entry-count') }}</th>
+                    <th>{{ "Count"|t('entry-count') }}</th>
+                    <th>{{ "First Count"|t('entry-count') }}</th>
+                    <th>{{ "Last Count"|t('entry-count') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,14 +45,14 @@
                         {{ count.dateUpdated }}
                     </td>
                     <td>
-                        <a href="{{ actionUrl('entryCount/reset', { entryId: entry.id }) }}" class="delete icon"></a>
+                        <a href="{{ actionUrl('entry-count/entry-count/reset', { entryId: entry.id }) }}" class="delete icon"></a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        {{ "No entries counted"|t }}
+        {{ "No entries counted"|t('entry-count') }}
     {% endif %}
 
 {% endblock %}

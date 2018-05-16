@@ -1,0 +1,24 @@
+{
+    "name": "putyourlightson/craft-entry-count",
+    "description": "Count and display the number of times that an entry has been viewed.",
+    "version": "2.0.0",
+    "type": "craft-plugin",
+    "require": {
+        "craftcms/cms": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "putyourlightson\\entrycount\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Entry Count",
+        "handle": "entry-count",
+        "developer": "PutYourLightsOn",
+        "developerUrl": "https://www.putyourlightson.net/craft-entry-count",
+        "schemaVersion": "2.0.0",
+        "hasCpSettings": true,
+        "hasCpSection": true,
+        "class": "putyourlightson\\entrycount\\EntryCount"
+    }
+}
