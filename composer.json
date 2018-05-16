@@ -3,6 +3,8 @@
     "description": "Count and display the number of times that an entry has been viewed.",
     "version": "2.0.0",
     "type": "craft-plugin",
+    "homepage": "https://www.putyourlightson.net/craft-entry-count",
+    "license": "MIT",
     "require": {
         "craftcms/cms": "^3.0.0"
     },
@@ -11,14 +13,20 @@
           "putyourlightson\\entrycount\\": "src/"
         }
     },
+    "support": {
+        "docs": "https://www.putyourlightson.net/craft-entry-count/docs",
+        "source": "https://github.com/putyourlightson/craft-entry-count",
+        "issues": "https://github.com/putyourlightson/craft-entry-count/issues"
+    },
     "extra": {
         "name": "Entry Count",
         "handle": "entry-count",
         "developer": "PutYourLightsOn",
-        "developerUrl": "https://www.putyourlightson.net/craft-entry-count",
+        "developerUrl": "https://www.putyourlightson.net/",
         "schemaVersion": "2.0.0",
         "hasCpSettings": true,
         "hasCpSection": true,
+        "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-campaign/v1/CHANGELOG.md",
         "class": "putyourlightson\\entrycount\\EntryCount"
     }
 }
