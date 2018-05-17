@@ -36,3 +36,5 @@ To install the plugin, search for "Entry Count" in the Craft Plugin Store, or in
 **increment(entry.id)**
 
     {% do craft.entryCount.increment(entry.id) %}
+    
+*Plugin icon by [Made by Made from the Noun Project](https://thenounproject.com/made.somewhere/collection/counting/?i=864431)*
