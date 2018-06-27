@@ -4,7 +4,7 @@
 
 The Entry Count Plugin was built specifically for training purposes and is used in the [Craft Plugin Development video course](https://mijingo.com/products/screencasts/craft-plugin-development/).
 
-It allows you to count and display the number of times that an entry has been viewed.
+It allows you to count and display the number of times that an entry has been viewed in  [Craft CMS](https://craftcms.com/).
 
 ## Requirements
 
