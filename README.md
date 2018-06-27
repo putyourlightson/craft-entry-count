@@ -1,4 +1,4 @@
-# Entry Count Plugin for Craft 3
+# Entry Count Plugin for Craft CMS
 
 The Entry Count Plugin was built specifically for training purposes and is used in the [Craft Plugin Development video course](https://mijingo.com/products/screencasts/craft-plugin-development/).
 
@@ -6,7 +6,7 @@ It allows you to count and display the number of times that an entry has been vi
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or later.
+Craft CMS 3.0.0 or later.
 
 ## Installation
 
