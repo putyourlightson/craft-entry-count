@@ -14,7 +14,7 @@ Craft CMS 3.0.0 or later.
 
 To install the plugin, search for "Entry Count" in the Craft Plugin Store, or install manually using composer.
 
-    composer require putyourlightson/entry-count
+    composer require putyourlightson/craft-entry-count
 
 ## Twig Tags
 
