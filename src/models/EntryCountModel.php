@@ -6,6 +6,7 @@
 namespace putyourlightson\entrycount\models;
 
 use craft\base\Model;
+use craft\validators\DateTimeValidator;
 
 /**
  * EntryCountModel
@@ -14,11 +15,6 @@ class EntryCountModel extends Model
 {
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var int|null ID
-     */
-    public $id;
 
     /**
      * @var int|null Entry ID
@@ -51,5 +47,15 @@ class EntryCountModel extends Model
     public function __toString()
     {
         return (string)$this->count;
+    }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+
+        $rules[] = [['entryId', 'count'], 'number'];
+        $rules[] = [['dateCreated', 'dateUpdated'], DateTimeValidator::class];
+
+        return $rules;
     }
 }

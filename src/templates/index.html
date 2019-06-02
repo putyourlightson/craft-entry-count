@@ -21,7 +21,7 @@
             </thead>
             <tbody>
             {% for entry in entries %}
-                {% set count = craft.entryCount.count(entry.id) %}
+                {% set count = craft.entryCount.getCount(entry.id) %}
                 <tr>
                     <td>
                         <a href="{{ url('entries/' ~ entry.section.handle ~ '/' ~ entry.id ~ '-' ~ entry.slug) }}">
@@ -36,7 +36,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ count }}
+                        {{ count.count }}
                     </td>
                     <td>
                         {{ count.dateCreated }}
@@ -51,6 +51,13 @@
             {% endfor %}
             </tbody>
         </table>
+        <br>
+        <form action="" method="post">
+            <input type="hidden" name="action" value="entry-count/entry-count/reset-all">
+            {{ csrfInput() }}
+
+            <input type="submit" value="Reset All" class="btn submit">
+        </form>
     {% else %}
         {{ "No entries counted"|t('entry-count') }}
     {% endif %}

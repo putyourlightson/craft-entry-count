@@ -10,6 +10,7 @@ use craft\base\Component;
 use craft\elements\db\EntryQuery;
 use craft\elements\Entry;
 use putyourlightson\entrycount\EntryCount;
+use putyourlightson\entrycount\events\EntryCountEvent;
 use putyourlightson\entrycount\models\EntryCountModel;
 use putyourlightson\entrycount\records\EntryCountRecord;
 use yii\base\Event;
@@ -21,10 +22,28 @@ use yii\base\Event;
  */
 class EntryCountService extends Component
 {
+    // Constants
+    // =========================================================================
+
     /**
      * @event Event
      */
     const EVENT_AFTER_RESET_COUNT = 'afterResetCount';
+
+    /**
+     * @event Event
+     */
+    const EVENT_AFTER_RESET_ALL_COUNT = 'afterResetAllCount';
+
+    /**
+     * @event EntryCountEvent
+     */
+    const EVENT_BEFORE_INCREMENT_COUNT = 'beforeIncrementCount';
+
+    /**
+     * @event EntryCountEvent
+     */
+    const EVENT_AFTER_INCREMENT_COUNT = 'afterIncrementCount';
 
     // Public Methods
     // =========================================================================
@@ -47,8 +66,10 @@ class EntryCountService extends Component
             ->one();
 
         if ($entryCountRecord) {
+            $attributes = $entryCountRecord->getAttributes();
+
             // populate model from record
-            $entryCountModel->setAttributes($entryCountRecord->getAttributes(), false);
+            $entryCountModel->setAttributes($attributes);
         }
 
         return $entryCountModel;
@@ -92,25 +113,33 @@ class EntryCountService extends Component
             return;
         }
 
+        if ($this->hasEventHandlers(self::EVENT_BEFORE_INCREMENT_COUNT)) {
+            $this->trigger(self::EVENT_BEFORE_INCREMENT_COUNT, new EntryCountEvent([
+                'entryId' => $entryId
+            ]));
+        }
+
         // get record from DB
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
 
         // if exists then increment count
-        if ($entryCountRecord) {
-            $entryCountRecord->setAttribute('count', $entryCountRecord->getAttribute('count') + 1);
+        if ($entryCountRecord === null) {
+            $entryCountRecord = new EntryCountRecord();
+            $entryCountRecord->entryId = $entryId;
         }
 
-        // otherwise create a new record
-        else {
-            $entryCountRecord = new EntryCountRecord;
-            $entryCountRecord->setAttribute('entryId', $entryId);
-            $entryCountRecord->setAttribute('count', 1);
-        }
+        $entryCountRecord->count = $entryCountRecord->count + 1;
 
         // save record in DB
         $entryCountRecord->save();
+
+        if ($this->hasEventHandlers(self::EVENT_AFTER_INCREMENT_COUNT)) {
+            $this->trigger(self::EVENT_AFTER_INCREMENT_COUNT, new EntryCountEvent([
+                'entryId' => $entryId
+            ]));
+        }
     }
 
     /**
@@ -120,29 +149,46 @@ class EntryCountService extends Component
      */
     public function reset($entryId)
     {
-        // get record from DB
+        // Get record from DB
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
 
-        // if record exists then delete
+        // If record exists then delete
         if ($entryCountRecord) {
-            // delete record from DB
+            // Delete record from DB
             $entryCountRecord->delete();
         }
 
-        // log reset
-        Craft::warning(Craft::t('entry-count', 'Entry count with entry ID {entryId} reset by {username}', [
-                'entryId' => $entryId,
-                'username' => Craft::$app->getUser()->getIdentity()->username,
+        // Log the reset
+        Craft::info(Craft::t('entry-count', 'Entry count with entry ID {entryId} reset by {username}', [
+            'entryId' => $entryId,
+            'username' => Craft::$app->getUser()->getIdentity()->username,
         ]), 'EntryCount');
 
 
-        // Fire a 'afterResetCount' event
+        // Fire an 'afterResetCount' event
         if ($this->hasEventHandlers(self::EVENT_AFTER_RESET_COUNT)) {
-            $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event([
-                'entryId' => $entryId,
-            ]));
+            $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event());
+        }
+    }
+
+    /**
+     * Reset all count
+     */
+    public function resetAll()
+    {
+        // Delete all records from DB
+        EntryCountRecord::deleteAll();
+
+        // Log the reset
+        Craft::info(Craft::t('entry-count', 'All entry counts reset by {username}', [
+            'username' => Craft::$app->getUser()->getIdentity()->username,
+        ]), 'EntryCount');
+
+        // Fire an 'afterResetAllCount' event
+        if ($this->hasEventHandlers(self::EVENT_AFTER_RESET_ALL_COUNT)) {
+            $this->trigger(self::EVENT_AFTER_RESET_ALL_COUNT, new Event());
         }
     }
 

@@ -14,6 +14,8 @@ use putyourlightson\entrycount\EntryCount;
  */
 class EntryCountController extends Controller
 {
+    protected $allowAnonymous = ['reset'];
+
     /**
      * Reset count
      */
@@ -24,6 +26,18 @@ class EntryCountController extends Controller
         EntryCount::$plugin->entryCount->reset($entryId);
 
         Craft::$app->getSession()->setNotice(Craft::t('entry-count', 'Entry count reset.'));
+
+        return $this->redirect('entry-count');
+    }
+
+    /**
+     * Reset all
+     */
+    public function actionResetAll()
+    {
+        EntryCount::$plugin->entryCount->resetAll();
+
+        Craft::$app->getSession()->setNotice(Craft::t('entry-count', 'All entry counts reset.'));
 
         return $this->redirect('entry-count');
     }

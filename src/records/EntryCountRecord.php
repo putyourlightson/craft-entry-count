@@ -10,9 +10,9 @@ use craft\db\ActiveRecord;
 /**
  * EntryCountRecord
  *
- * @property int         $id                         ID
- * @property int         $entryId                    Entry ID
- * @property int         $count                      Count
+ * @property int $id
+ * @property int $entryId
+ * @property int $count
  */
 class EntryCountRecord extends ActiveRecord
 {
