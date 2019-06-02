@@ -2,7 +2,7 @@
 
 {% set title = "Entry Count"|t('entry-count') %}
 
-{% set entries = craft.entryCount.entries.all() %}
+{% set entries = craft.entryCount.countedEntries.all() %}
 
 
 {% block content %}

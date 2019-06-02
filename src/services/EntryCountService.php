@@ -7,8 +7,10 @@ namespace putyourlightson\entrycount\services;
 
 use Craft;
 use craft\base\Component;
+use craft\elements\db\ElementQuery;
 use craft\elements\db\EntryQuery;
 use craft\elements\Entry;
+use craft\events\CancelableEvent;
 use putyourlightson\entrycount\EntryCount;
 use putyourlightson\entrycount\events\EntryCountEvent;
 use putyourlightson\entrycount\models\EntryCountModel;
@@ -76,29 +78,41 @@ class EntryCountService extends Component
     }
 
     /**
-     * Returns counted entries
+     * Returns all entries
      *
      * @return EntryQuery
      */
     public function getEntries(): EntryQuery
     {
-        // get all records from DB ordered by count descending
-        $entryCountRecords = EntryCountRecord::find()
-            ->orderBy('count desc')
-            ->all();
+        $entryQuery = Entry::find();
 
-        // get entry ids from records
-        $entryIds = [];
+        $entryQuery->on(ElementQuery::EVENT_BEFORE_PREPARE, function(CancelableEvent $event) {
+            /** @var ElementQuery $query */
+            $query = $event->sender;
+            $query->addSelect('count');
+            $query->leftJoin(EntryCountRecord::tableName(), 'entryId = elements.id');
+        });
 
-        foreach ($entryCountRecords as $entryCountRecord) {
-            /** @var EntryCountRecord $entryCountRecord */
-            $entryIds[] = $entryCountRecord->entryId;
-        }
+        return $entryQuery;
+    }
 
-        // return entry query
-        return Entry::find()
-            ->id($entryIds)
-            ->fixedOrder(true);
+    /**
+     * Returns counted entries
+     *
+     * @return EntryQuery
+     */
+    public function getCountedEntries(): EntryQuery
+    {
+        $entryQuery = Entry::find();
+
+        $entryQuery->on(ElementQuery::EVENT_BEFORE_PREPARE, function(CancelableEvent $event) {
+            /** @var ElementQuery $query */
+            $query = $event->sender;
+            $query->addSelect('count');
+            $query->innerJoin(EntryCountRecord::tableName(), 'entryId = elements.id');
+        });
+
+        return $entryQuery;
     }
 
     /**

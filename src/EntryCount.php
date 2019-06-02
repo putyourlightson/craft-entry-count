@@ -6,8 +6,12 @@
 namespace putyourlightson\entrycount;
 
 use Craft;
+use craft\base\Element;
 use craft\base\Plugin;
+use craft\elements\Entry;
+use craft\events\DefineBehaviorsEvent;
 use craft\web\twig\variables\CraftVariable;
+use putyourlightson\entrycount\behaviors\EntryCountBehavior;
 use putyourlightson\entrycount\models\SettingsModel;
 use putyourlightson\entrycount\services\EntryCountService;
 use putyourlightson\entrycount\variables\EntryCountVariable;
@@ -47,6 +51,13 @@ class EntryCount extends Plugin
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('entryCount', EntryCountVariable::class);
+        });
+
+        // Register behavior
+        Event::on(Element::class, Element::EVENT_DEFINE_BEHAVIORS, function(DefineBehaviorsEvent $event) {
+            if ($event->sender instanceof Entry) {
+                $event->behaviors['entryCount'] = EntryCountBehavior::class;
+            }
         });
     }
 

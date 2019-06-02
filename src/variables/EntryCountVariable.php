@@ -27,13 +27,23 @@ class EntryCountVariable
     }
 
     /**
-     * Returns counted entries
+     * Returns all entries
      *
      * @return EntryQuery
      */
     public function getEntries(): EntryQuery
     {
         return EntryCount::$plugin->entryCount->getEntries();
+    }
+
+    /**
+     * Returns counted entries
+     *
+     * @return EntryQuery
+     */
+    public function getCountedEntries(): EntryQuery
+    {
+        return EntryCount::$plugin->entryCount->getCountedEntries();
     }
 
     /**
