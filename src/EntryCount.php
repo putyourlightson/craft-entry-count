@@ -21,6 +21,8 @@ use yii\base\Event;
  * EntryCount
  *
  * @property EntryCountService $entryCount
+ *
+ * @method SettingsModel getSettings()
  */
 class EntryCount extends Plugin
 {

@@ -2,12 +2,12 @@
 
 namespace putyourlightson\entrycount\events;
 
-use yii\base\Event;
+use craft\events\CancelableEvent;
 
 /**
  * Class Name
  */
-class EntryCountEvent extends Event
+class EntryCountEvent extends CancelableEvent
 {
     // Properties
     // =========================================================================

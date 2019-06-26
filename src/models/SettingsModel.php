@@ -24,4 +24,9 @@ class SettingsModel extends Model
      * @var string
      */
     public $ignoreIpAddresses;
+
+    /**
+     * @var array  
+     */
+    public $ignoreSections = [];
 }

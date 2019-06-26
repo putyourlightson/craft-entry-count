@@ -21,6 +21,7 @@ use yii\base\Event;
  * EntryCountService
  *
  * @property EntryQuery $entries
+ * @property EntryQuery $countedEntries
  */
 class EntryCountService extends Component
 {
@@ -123,14 +124,18 @@ class EntryCountService extends Component
     public function increment($entryId)
     {
         // check if action should be ignored
-        if ($this->_ignoreAction()) {
+        if ($this->_ignoreAction($entryId)) {
             return;
         }
 
-        if ($this->hasEventHandlers(self::EVENT_BEFORE_INCREMENT_COUNT)) {
-            $this->trigger(self::EVENT_BEFORE_INCREMENT_COUNT, new EntryCountEvent([
-                'entryId' => $entryId
-            ]));
+        $event = new EntryCountEvent([
+            'entryId' => $entryId
+        ]);
+
+        $this->trigger(self::EVENT_BEFORE_INCREMENT_COUNT, $event);
+
+        if (!$event->isValid) {
+            return;
         }
 
         // get record from DB
@@ -212,9 +217,11 @@ class EntryCountService extends Component
     /**
      * Check if action should be ignored
      *
+     * @param $entryId
+     *
      * @return bool
      */
-    private function _ignoreAction(): bool
+    private function _ignoreAction($entryId): bool
     {
         // get plugin settings
         $settings = EntryCount::$plugin->getSettings();
@@ -227,6 +234,14 @@ class EntryCountService extends Component
         // check if ip address should be ignored based on settings
         if ($settings->ignoreIpAddresses AND in_array(Craft::$app->getRequest()->getUserIP(), explode("\n", $settings->ignoreIpAddresses), true)) {
             return true;
+        }
+
+        if (count($settings->ignoreSections)) {
+            $sectionId = Craft::$app->entries->getEntryById($entryId)->sectionId;
+
+            if (in_array($sectionId, $settings->ignoreSections)) {
+                return true;
+            }
         }
 
         return false;
