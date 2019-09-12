@@ -6,6 +6,14 @@ The Entry Count Plugin was built specifically for training purposes and is used 
 
 It allows you to count and display the number of times that an entry has been viewed in  [Craft CMS](https://craftcms.com/).
 
+## Documentation
+
+Learn more and read the documentation at [putyourlightson.com/plugins/entry-count »](https://putyourlightson.com/plugins/entry-count)
+
+## License
+
+This plugin is licensed for free under the MIT License.
+
 ## Requirements
 
 Craft CMS 3.0.0 or later.
@@ -16,27 +24,6 @@ To install the plugin, search for "Entry Count" in the Craft Plugin Store, or in
 
     composer require putyourlightson/craft-entry-count
 
-## Twig Tags
-
-**count(entry.id)**
-
-    {% set count = craft.entryCount.count(entry.id) %}
-
-    Entry count: {{ count }}
-    First count: {{ count.dateCreated }}
-    Last count: {{ count.dateUpdated }}
-
-**entries**
-
-    {% set entries = craft.entryCount.entries.all() %}
-
-    {% for entry in entries %}
-        {% set count = craft.entryCount.count(entry.id) %}
-        {{ entry.title }} ({{ count }} views)
-    {% endfor %}
-
-**increment(entry.id)**
-
-    {% do craft.entryCount.increment(entry.id) %}
-    
 *Plugin icon by [Made by Made from the Noun Project](https://thenounproject.com/made.somewhere/collection/counting/?i=864431)*
+
+<small>Created by [PutYourLightsOn](https://putyourlightson.com/).</small>
