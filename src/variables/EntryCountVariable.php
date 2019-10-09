@@ -21,9 +21,9 @@ class EntryCountVariable
      *
      * @return EntryCountModel
      */
-    public function getCount($entryId): EntryCountModel
+    public function getCount($entryId, $key = null): EntryCountModel
     {
-        return EntryCount::$plugin->entryCount->getCount($entryId);
+        return EntryCount::$plugin->entryCount->getCount($entryId, $key);
     }
 
     /**
@@ -41,8 +41,8 @@ class EntryCountVariable
      *
      * @param int $entryId
      */
-    public function increment($entryId)
+    public function increment($entryId, $key = null)
     {
-        EntryCount::$plugin->entryCount->increment($entryId);
+        EntryCount::$plugin->entryCount->increment($entryId, $key);
     }
 }

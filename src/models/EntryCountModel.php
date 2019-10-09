@@ -31,6 +31,11 @@ class EntryCountModel extends Model
     public $count = 0;
 
     /**
+     * @var string key
+     */
+    public $key = null;
+    
+    /**
      * @var \DateTime|null Date created
      */
     public $dateCreated;
