@@ -36,14 +36,14 @@ class EntryCountService extends Component
      *
      * @return EntryCountModel
      */
-    public function getCount($entryId): EntryCountModel
+    public function getCount($entryId, $key = null): EntryCountModel
     {
         // create new model
         $entryCountModel = new EntryCountModel();
 
         // get record from DB
         $entryCountRecord = EntryCountRecord::find()
-            ->where(['entryId' => $entryId])
+            ->where(['entryId' => $entryId, 'key' => $key])
             ->one();
 
         if ($entryCountRecord) {
@@ -85,7 +85,7 @@ class EntryCountService extends Component
      *
      * @param int $entryId
      */
-    public function increment($entryId)
+    public function increment($entryId, $key = null)
     {
         // check if action should be ignored
         if ($this->_ignoreAction()) {
@@ -94,7 +94,7 @@ class EntryCountService extends Component
 
         // get record from DB
         $entryCountRecord = EntryCountRecord::find()
-            ->where(['entryId' => $entryId])
+            ->where(['entryId' => $entryId, 'key' => $key])
             ->one();
 
         // if exists then increment count
@@ -104,8 +104,10 @@ class EntryCountService extends Component
 
         // otherwise create a new record
         else {
+	        
             $entryCountRecord = new EntryCountRecord;
             $entryCountRecord->setAttribute('entryId', $entryId);
+            $entryCountRecord->setAttribute('key', $key);
             $entryCountRecord->setAttribute('count', 1);
         }
 
@@ -118,11 +120,11 @@ class EntryCountService extends Component
      *
      * @param int $entryId
      */
-    public function reset($entryId)
+    public function reset($entryId, $key)
     {
         // get record from DB
         $entryCountRecord = EntryCountRecord::find()
-            ->where(['entryId' => $entryId])
+            ->where(['entryId' => $entryId, 'key' => $key])
             ->one();
 
         // if record exists then delete
@@ -142,6 +144,7 @@ class EntryCountService extends Component
         if ($this->hasEventHandlers(self::EVENT_AFTER_RESET_COUNT)) {
             $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event([
                 'entryId' => $entryId,
+                'key' => $key
             ]));
         }
     }
