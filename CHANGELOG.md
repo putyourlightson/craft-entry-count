@@ -1,5 +1,12 @@
 # Entry Count Changelog
 
+## 2.0.3 - 2019-02-13
+### Added
+- Added better multi-site compatibility.
+
+### Fixed
+- Fixed error when deleting a single counted entry.
+
 ## 2.0.2 - 2019-01-19
 ### Added
 - Added Hungarian translation.

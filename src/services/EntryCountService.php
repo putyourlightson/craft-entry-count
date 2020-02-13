@@ -77,6 +77,7 @@ class EntryCountService extends Component
         // return entry query
         return Entry::find()
             ->id($entryIds)
+            ->site('*')
             ->fixedOrder(true);
     }
 
