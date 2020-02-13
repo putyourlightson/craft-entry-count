@@ -140,9 +140,7 @@ class EntryCountService extends Component
 
         // Fire a 'afterResetCount' event
         if ($this->hasEventHandlers(self::EVENT_AFTER_RESET_COUNT)) {
-            $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event([
-                'entryId' => $entryId,
-            ]));
+            $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event());
         }
     }
 
