@@ -12,10 +12,13 @@ use craft\elements\Entry;
 use craft\events\DefineBehaviorsEvent;
 use craft\events\DefineGqlTypeFieldsEvent;
 use craft\events\PopulateElementEvent;
+use craft\events\RegisterGqlMutationsEvent;
 use craft\gql\TypeManager;
+use craft\services\Gql;
 use craft\web\twig\variables\CraftVariable;
 use GraphQL\Type\Definition\Type;
 use putyourlightson\entrycount\behaviors\EntryCountBehavior;
+use putyourlightson\entrycount\gql\mutations\EntryCountMutation;
 use putyourlightson\entrycount\models\SettingsModel;
 use putyourlightson\entrycount\records\EntryCountRecord;
 use putyourlightson\entrycount\services\EntryCountService;
@@ -133,6 +136,14 @@ class EntryCount extends Plugin
                     }
                 ];
             }
+        });
+
+        // Registers GraphQL mutation definitions
+        Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_MUTATIONS, function(RegisterGqlMutationsEvent $event) {
+            $event->mutations = array_merge(
+                $event->mutations,
+                EntryCountMutation::getMutations()
+            );
         });
     }
 }
