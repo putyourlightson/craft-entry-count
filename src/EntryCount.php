@@ -79,11 +79,15 @@ class EntryCount extends Plugin
 
     private function _registerVariable()
     {
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
-            /** @var CraftVariable $variable */
-            $variable = $event->sender;
-            $variable->set('entryCount', EntryCountVariable::class);
-        });
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function(Event $event) {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('entryCount', EntryCountVariable::class);
+            }
+        );
     }
 
     private function _registerEntryEvents()
@@ -104,7 +108,8 @@ class EntryCount extends Plugin
             function (Event $event) {
                 /** @var EntryQuery $entryQuery */
                 $entryQuery = $event->sender;
-                $entryQuery->addSelect('[[entrycount.count]]');
+
+                $entryQuery->addSelect(['count' => '[[entrycount.count]]']);
                 $entryQuery->leftJoin(
                     ['entrycount' => EntryCountRecord::tableName()],
                     '[[elements.id]] = [[entrycount.entryId]]'
@@ -126,24 +131,32 @@ class EntryCount extends Plugin
     private function _registerGraphQl()
     {
         // Registers GraphQL type fields.
-        Event::on(TypeManager::class, TypeManager::EVENT_DEFINE_GQL_TYPE_FIELDS, function(DefineGqlTypeFieldsEvent $event) {
-            if ($event->typeName == 'EntryInterface') {
-                $event->fields['count'] = [
-                    'name' => 'count',
-                    'type' => Type::int(),
-                    'resolve' => function ($source) {
-                        return $source->count;
-                    }
-                ];
+        Event::on(
+            TypeManager::class,
+            TypeManager::EVENT_DEFINE_GQL_TYPE_FIELDS,
+            function(DefineGqlTypeFieldsEvent $event) {
+                if ($event->typeName == 'EntryInterface') {
+                    $event->fields['count'] = [
+                        'name' => 'count',
+                        'type' => Type::int(),
+                        'resolve' => function ($source) {
+                            return $source->count;
+                        }
+                    ];
+                }
             }
-        });
+        );
 
         // Registers GraphQL mutation definitions
-        Event::on(Gql::class, Gql::EVENT_REGISTER_GQL_MUTATIONS, function(RegisterGqlMutationsEvent $event) {
-            $event->mutations = array_merge(
-                $event->mutations,
-                EntryCountMutation::getMutations()
-            );
-        });
+        Event::on(
+            Gql::class,
+            Gql::EVENT_REGISTER_GQL_MUTATIONS,
+            function(RegisterGqlMutationsEvent $event) {
+                $event->mutations = array_merge(
+                    $event->mutations,
+                    EntryCountMutation::getMutations()
+                );
+            }
+        );
     }
 }
