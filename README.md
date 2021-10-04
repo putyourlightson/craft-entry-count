@@ -19,11 +19,11 @@ query EntriesOrderedByCountDesc {
 }
 ```
 
-The entry count of an entry can be reset using a mutation.
+The entry count of an entry can be incremented using a mutation.
 
 ```gql
-mutation ResetEntryCount($entryId: ID!) {
-  resetEntryCount(entryId: $entryId)
+mutation IncrementEntryCount($entryId: ID!) {
+  incrementEntryCount(entryId: $entryId)
 }
 ```
 

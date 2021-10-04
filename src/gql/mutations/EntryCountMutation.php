@@ -12,12 +12,12 @@ use putyourlightson\entrycount\EntryCount;
 class EntryCountMutation extends Mutation
 {
     /**
-     * Registers the `resetCount` mutation.
+     * Registers the `incrementEntryCount` mutation.
      *
      * Sample query:
      *
      * mutation ($entryId: ID!) {
-     *   resetEntryCount(entryId: $entryId)
+     *   incrementEntryCount(entryId: $entryId)
      * }
      *
      * Query variables:
@@ -29,13 +29,13 @@ class EntryCountMutation extends Mutation
     public static function getMutations(): array
     {
         return [
-            'resetCount' => [
-                'name' => 'resetEntryCount',
-                'description' => 'Reset the entry count for an entry.',
+            'incrementEntryCount' => [
+                'name' => 'incrementEntryCount',
+                'description' => 'Increment the entry count for an entry.',
                 'args' => ['entryId' => Type::nonNull(Type::id())],
                 'type' => Type::boolean(),
                 'resolve' => function($source, array $arguments) {
-                    EntryCount::$plugin->entryCount->reset($arguments['entryId']);
+                    EntryCount::$plugin->entryCount->increment($arguments['entryId']);
                     return true;
                 },
             ]
