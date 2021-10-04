@@ -25,8 +25,11 @@ The entry count of an entry can be reset using a mutation.
 mutation ResetEntryCount($entryId: ID!) {
   resetEntryCount(entryId: $entryId)
 }
+```
 
-// Query variables:
+An entry ID must be provided via query variables.
+
+```gql
 {
   "entryId": 147
 }
