@@ -6,6 +6,32 @@ The Entry Count Plugin was built specifically for training purposes and is used 
 
 It allows you to count and display the number of times that an entry has been viewed in  [Craft CMS](https://craftcms.com/). The plugin is intended for educational purposes and can be freely used for simple use-cases. For anything more complex, use the [View Count](https://www.doublesecretagency.com/plugins/view-count) plugin.
 
+## GraphQL Support
+
+GraphQL support has been added in this branch and can be used as follows.
+
+```json
+query EntriesOrderedByCountDesc {
+  entries(orderBy: "count desc") {
+    id
+    count
+  }
+}
+```
+
+The entry count of an entry can be reset using a mutation.
+
+```json
+mutation ResetEntryCount($entryId: ID!) {
+  resetEntryCount(entryId: $entryId)
+}
+
+// Query variables:
+{
+  "entryId": 147
+}
+```
+
 ## Documentation
 
 Learn more and read the documentation at [putyourlightson.com/plugins/entry-count »](https://putyourlightson.com/plugins/entry-count)

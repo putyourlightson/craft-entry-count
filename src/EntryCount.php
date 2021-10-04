@@ -6,7 +6,9 @@
 namespace putyourlightson\entrycount;
 
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
+use craft\elements\db\ElementQuery;
 use craft\elements\db\EntryQuery;
 use craft\elements\Entry;
 use craft\events\DefineBehaviorsEvent;
@@ -95,8 +97,8 @@ class EntryCount extends Plugin
         // Registers the entry count behavior on entries.
         Event::on(
             Entry::class,
-            Entry::EVENT_DEFINE_BEHAVIORS,
-            function (DefineBehaviorsEvent $event) {
+            Model::EVENT_DEFINE_BEHAVIORS,
+            function(DefineBehaviorsEvent $event) {
                 $event->behaviors['entryCount'] = EntryCountBehavior::class;
             }
         );
@@ -104,8 +106,8 @@ class EntryCount extends Plugin
         // Joins the entry count table with entry queries.
         Event::on(
             EntryQuery::class,
-            EntryQuery::EVENT_BEFORE_PREPARE,
-            function (Event $event) {
+            ElementQuery::EVENT_BEFORE_PREPARE,
+            function(Event $event) {
                 /** @var EntryQuery $entryQuery */
                 $entryQuery = $event->sender;
 
@@ -124,8 +126,8 @@ class EntryCount extends Plugin
         // Ensures the entry count value is an integer.
         Event::on(
             EntryQuery::class,
-            EntryQuery::EVENT_AFTER_POPULATE_ELEMENT,
-            function (PopulateElementEvent $event) {
+            ElementQuery::EVENT_AFTER_POPULATE_ELEMENT,
+            function(PopulateElementEvent $event) {
                 $entry = $event->element;
                 $entry->count = (int)$event->row['count'];
             }
@@ -134,7 +136,19 @@ class EntryCount extends Plugin
 
     private function _registerGraphQl()
     {
-        // Registers GraphQL type fields.
+        /**
+         * Registers the `count` GraphQL type field
+         *
+         * Sample query:
+         *
+         * {
+         *   entries {
+         *     id
+         *     count
+         *   }
+         * }
+         *
+         */
         Event::on(
             TypeManager::class,
             TypeManager::EVENT_DEFINE_GQL_TYPE_FIELDS,
@@ -143,7 +157,7 @@ class EntryCount extends Plugin
                     $event->fields['count'] = [
                         'name' => 'count',
                         'type' => Type::int(),
-                        'resolve' => function ($source) {
+                        'resolve' => function($source) {
                             return $source->count;
                         }
                     ];
