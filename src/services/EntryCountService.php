@@ -86,7 +86,7 @@ class EntryCountService extends Component
      *
      * @param int $entryId
      */
-    public function increment($entryId)
+    public function increment(int $entryId)
     {
         // check if action should be ignored
         if ($this->_ignoreAction()) {
@@ -158,7 +158,7 @@ class EntryCountService extends Component
         // get plugin settings
         $settings = EntryCount::$plugin->getSettings();
 
-        // check if logged in users should be ignored based on settings
+        // check if logged-in users should be ignored based on settings
         if ($settings->ignoreLoggedInUsers AND !Craft::$app->getUser()->getIsGuest()) {
             return true;
         }
