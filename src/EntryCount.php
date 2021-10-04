@@ -156,6 +156,7 @@ class EntryCount extends Plugin
                 if ($event->typeName == 'EntryInterface') {
                     $event->fields['count'] = [
                         'name' => 'count',
+                        'description' => 'The entry count of the entry',
                         'type' => Type::int(),
                         'resolve' => function($source) {
                             return $source->count;
