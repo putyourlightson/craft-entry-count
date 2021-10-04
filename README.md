@@ -10,7 +10,7 @@ It allows you to count and display the number of times that an entry has been vi
 
 GraphQL support has been added in this branch and can be used as follows.
 
-```json
+```gql
 query EntriesOrderedByCountDesc {
   entries(orderBy: "count desc") {
     id
@@ -21,7 +21,7 @@ query EntriesOrderedByCountDesc {
 
 The entry count of an entry can be reset using a mutation.
 
-```json
+```gql
 mutation ResetEntryCount($entryId: ID!) {
   resetEntryCount(entryId: $entryId)
 }
