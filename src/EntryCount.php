@@ -111,11 +111,19 @@ class EntryCount extends Plugin
                 /** @var EntryQuery $entryQuery */
                 $entryQuery = $event->sender;
 
-                // Don't add a select if we're getting the count to avoid an error.
-                if ($entryQuery->select != ['COUNT(*)']) {
-                    $entryQuery->addSelect('[[entrycount.count]]');
+                // Don't add a select if we're getting the count, to avoid an error.
+                // Test with: {{ craft.entries.count() }}
+                if ($entryQuery->select == ['COUNT(*)']) {
+                    return;
                 }
 
+                // Don't add a select if we're searching, to avoid an error.
+                // Test with: {{ craft.entries.search('title').count() }}
+                if ($entryQuery->select == ['elements.id' => 'elements.id']) {
+                    return;
+                }
+
+                $entryQuery->addSelect('[[entrycount.count]]');
                 $entryQuery->leftJoin(
                     ['entrycount' => EntryCountRecord::tableName()],
                     '[[elements.id]] = [[entrycount.entryId]]'
