@@ -31,7 +31,7 @@
                     <td>
                         {% if entry.url %}
                             <a href="{{ entry.url }}" class="go" target="_blank">
-                                {{ entry.uri }}
+                                {{- entry.uri == '__home__' ? '/' : entry.uri -}}
                             </a>
                         {% endif %}
                     </td>
@@ -39,10 +39,10 @@
                         {{ count }}
                     </td>
                     <td>
-                        {{ count.dateCreated }}
+                        {{ count.dateCreated|datetime }}
                     </td>
                     <td>
-                        {{ count.dateUpdated }}
+                        {{ count.dateUpdated|datetime }}
                     </td>
                     <td>
                         <a href="{{ actionUrl('entry-count/entry-count/reset', { entryId: entry.id }) }}" class="delete icon"></a>

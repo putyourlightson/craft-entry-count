@@ -7,21 +7,15 @@ namespace putyourlightson\entrycount\models;
 
 use craft\base\Model;
 
-/**
- * SettingsModel
- */
 class SettingsModel extends Model
 {
-    // Public Properties
-    // =========================================================================
-
     /**
      * @var bool
      */
-    public $ignoreLoggedInUsers = false;
+    public bool $ignoreLoggedInUsers = false;
 
     /**
      * @var string
      */
-    public $ignoreIpAddresses;
+    public string $ignoreIpAddresses = '';
 }

@@ -15,8 +15,6 @@ use putyourlightson\entrycount\records\EntryCountRecord;
 use yii\base\Event;
 
 /**
- * EntryCountService
- *
  * @property EntryQuery $entries
  */
 class EntryCountService extends Component
@@ -24,30 +22,23 @@ class EntryCountService extends Component
     /**
      * @event Event
      */
-    const EVENT_AFTER_RESET_COUNT = 'afterResetCount';
-
-    // Public Methods
-    // =========================================================================
+    public const EVENT_AFTER_RESET_COUNT = 'afterResetCount';
 
     /**
      * Returns count
-     *
-     * @param int $entryId
-     *
-     * @return EntryCountModel
      */
-    public function getCount($entryId): EntryCountModel
+    public function getCount(int $entryId): EntryCountModel
     {
-        // create new model
+        // Create new model
         $entryCountModel = new EntryCountModel();
 
-        // get record from DB
+        // Get record from DB
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
 
         if ($entryCountRecord) {
-            // populate model from record
+            // Populate model from record
             $entryCountModel->setAttributes($entryCountRecord->getAttributes(), false);
         }
 
@@ -56,86 +47,79 @@ class EntryCountService extends Component
 
     /**
      * Returns counted entries
-     *
-     * @return EntryQuery
      */
     public function getEntries(): EntryQuery
     {
-        // get all records from DB ordered by count descending
+        // Get all records from DB ordered by count descending
         $entryCountRecords = EntryCountRecord::find()
             ->orderBy('count desc')
             ->all();
 
-        // get entry ids from records
+        // Get entry ids from records
         $entryIds = [];
 
         foreach ($entryCountRecords as $entryCountRecord) {
-            /** @var EntryCountRecord $entryCountRecord */
             $entryIds[] = $entryCountRecord->entryId;
         }
 
-        // return entry query
+        // Return entry query
         return Entry::find()
             ->id($entryIds)
-            ->site('*')
-            ->fixedOrder(true);
+//            ->site('*')
+            ->fixedOrder();
     }
 
     /**
      * Increment count
-     *
-     * @param int $entryId
      */
-    public function increment($entryId)
+    public function increment(int $entryId)
     {
-        // check if action should be ignored
+        // Check if action should be ignored
         if ($this->_ignoreAction()) {
             return;
         }
 
-        // get record from DB
+        // Get record from DB
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
 
-        // if exists then increment count
+        // If exists then increment count
         if ($entryCountRecord) {
             $entryCountRecord->setAttribute('count', $entryCountRecord->getAttribute('count') + 1);
         }
 
-        // otherwise create a new record
+        // Otherwise create a new record
         else {
-            $entryCountRecord = new EntryCountRecord;
+            $entryCountRecord = new EntryCountRecord();
             $entryCountRecord->setAttribute('entryId', $entryId);
             $entryCountRecord->setAttribute('count', 1);
         }
 
-        // save record in DB
+        // Save record in DB
         $entryCountRecord->save();
     }
 
     /**
      * Reset count
-     *
-     * @param int $entryId
      */
-    public function reset($entryId)
+    public function reset(int $entryId)
     {
-        // get record from DB
+        // Get record from DB
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
 
-        // if record exists then delete
+        // If record exists then delete
         if ($entryCountRecord) {
-            // delete record from DB
+            // Delete record from DB
             $entryCountRecord->delete();
         }
 
-        // log reset
+        // Log reset
         Craft::warning(Craft::t('entry-count', 'Entry count with entry ID {entryId} reset by {username}', [
-                'entryId' => $entryId,
-                'username' => Craft::$app->getUser()->getIdentity()->username,
+            'entryId' => $entryId,
+            'username' => Craft::$app->getUser()->getIdentity()->username,
         ]), 'EntryCount');
 
 
@@ -145,26 +129,24 @@ class EntryCountService extends Component
         }
     }
 
-    // Helper methods
-    // =========================================================================
-
     /**
      * Check if action should be ignored
-     *
-     * @return bool
      */
     private function _ignoreAction(): bool
     {
-        // get plugin settings
-        $settings = EntryCount::$plugin->getSettings();
+        // Get plugin settings
+        $settings = EntryCount::$plugin->settings;
 
-        // check if logged in users should be ignored based on settings
-        if ($settings->ignoreLoggedInUsers AND !Craft::$app->getUser()->getIsGuest()) {
+        // Check if logged-in users should be ignored based on settings
+        if ($settings->ignoreLoggedInUsers && !Craft::$app->getUser()->getIsGuest()) {
             return true;
         }
 
-        // check if ip address should be ignored based on settings
-        if ($settings->ignoreIpAddresses AND in_array(Craft::$app->getRequest()->getUserIP(), explode("\n", $settings->ignoreIpAddresses), true)) {
+        // Check if IP address should be ignored based on settings
+        $userIp = Craft::$app->getRequest()->getUserIP();
+        $ignoreIpAddresses = explode("\n", $settings->ignoreIpAddresses);
+
+        if ($settings->ignoreIpAddresses && in_array($userIp, $ignoreIpAddresses, true)) {
             return true;
         }
 

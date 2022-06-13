@@ -14,33 +14,55 @@ use putyourlightson\entrycount\variables\EntryCountVariable;
 use yii\base\Event;
 
 /**
- * EntryCount
- *
  * @property EntryCountService $entryCount
+ * @property-read SettingsModel $settings
  */
 class EntryCount extends Plugin
 {
-    // Static Properties
-    // =========================================================================
-
     /**
      * @var EntryCount
      */
-    public static $plugin;
+    public static EntryCount $plugin;
 
-    // Public Methods
-    // =========================================================================
+    /**
+     * @inheritdoc
+     */
+    public static function config(): array
+    {
+        return [
+            'components' => [
+                'entryCount' => ['class' => EntryCountService::class],
+            ],
+        ];
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public bool $hasCpSection = true;
+
+    /**
+     * @inheritdoc
+     */
+    public bool $hasCpSettings = true;
+
+    /**
+     * @inheritdoc
+     */
+    public string $schemaVersion = '2.0.0';
+
+    /**
+     * @inheritdoc
+     */
+    public string $minVersionRequired = '2.0.3';
+
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
-
         self::$plugin = $this;
-
-        // Register services as components
-        $this->setComponents([
-            'entryCount' => EntryCountService::class,
-        ]);
 
         // Register variable
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
@@ -49,9 +71,6 @@ class EntryCount extends Plugin
             $variable->set('entryCount', EntryCountVariable::class);
         });
     }
-
-    // Protected Methods
-    // =========================================================================
 
     /**
      * @inheritdoc
@@ -64,10 +83,10 @@ class EntryCount extends Plugin
     /**
      * @inheritdoc
      */
-    protected function settingsHtml()
+    protected function settingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('entry-count/settings', [
-            'settings' => $this->getSettings()
+            'settings' => $this->getSettings(),
         ]);
     }
 }

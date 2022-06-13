@@ -8,16 +8,10 @@ namespace putyourlightson\entrycount\migrations;
 use Craft;
 use craft\db\Migration;
 
-/**
- * Entry Count Install Migration
- */
 class Install extends Migration
 {
-    // Public Methods
-    // =========================================================================
-
     /**
-     * @return boolean
+     * @inheritdoc
      */
     public function safeUp(): bool
     {
@@ -43,8 +37,7 @@ class Install extends Migration
     }
 
     /**
-     * @return boolean
-     * @throws \Throwable
+     * @inheritdoc
      */
     public function safeDown(): bool
     {

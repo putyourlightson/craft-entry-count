@@ -1,4 +1,8 @@
-# Entry Count Changelog
+# # Release Notes for Entry Count
+
+## 3.0.0 - 2022-06-13
+### Added
+- Added compatibility with Craft 4.
 
 ## 2.0.3 - 2019-02-13
 ### Added

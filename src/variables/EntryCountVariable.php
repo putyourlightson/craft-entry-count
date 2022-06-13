@@ -9,27 +9,18 @@ use craft\elements\db\EntryQuery;
 use putyourlightson\entrycount\EntryCount;
 use putyourlightson\entrycount\models\EntryCountModel;
 
-/**
- * Entry Count Variable
- */
 class EntryCountVariable
 {
     /**
      * Returns count
-     *
-     * @param int $entryId
-     *
-     * @return EntryCountModel
      */
-    public function getCount($entryId): EntryCountModel
+    public function getCount(int $entryId): EntryCountModel
     {
         return EntryCount::$plugin->entryCount->getCount($entryId);
     }
 
     /**
      * Returns counted entries
-     *
-     * @return EntryQuery
      */
     public function getEntries(): EntryQuery
     {
@@ -38,10 +29,8 @@ class EntryCountVariable
 
     /**
      * Increment count
-     *
-     * @param int $entryId
      */
-    public function increment($entryId)
+    public function increment(int $entryId): void
     {
         EntryCount::$plugin->entryCount->increment($entryId);
     }

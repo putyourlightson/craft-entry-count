@@ -6,49 +6,39 @@
 namespace putyourlightson\entrycount\models;
 
 use craft\base\Model;
+use DateTime;
 
-/**
- * EntryCountModel
- */
 class EntryCountModel extends Model
 {
-    // Public Properties
-    // =========================================================================
+    /**
+     * @var int|null
+     */
+    public ?int $id;
 
     /**
-     * @var int|null ID
+     * @var int|null
      */
-    public $id;
+    public ?int $entryId;
 
     /**
-     * @var int|null Entry ID
+     * @var int
      */
-    public $entryId;
+    public int $count = 0;
 
     /**
-     * @var int Count
+     * @var DateTime|null
      */
-    public $count = 0;
+    public ?DateTime $dateCreated;
 
     /**
-     * @var \DateTime|null Date created
+     * @var DateTime|null
      */
-    public $dateCreated;
-
-    /**
-     * @var \DateTime|null Date updated
-     */
-    public $dateUpdated;
-
-    // Public Methods
-    // =========================================================================
+    public ?DateTime $dateUpdated;
 
     /**
      * Define what is returned when model is converted to string
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->count;
     }
