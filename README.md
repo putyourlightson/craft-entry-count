@@ -1,5 +1,5 @@
-[![Stable Version](https://img.shields.io/packagist/v/putyourlightson/entry-count?label=stable)]((https://packagist.org/packages/putyourlightson/entry-count))
-[![Total Downloads](https://img.shields.io/packagist/dt/putyourlightson/entry-count)](https://packagist.org/packages/putyourlightson/entry-count)
+[![Stable Version](https://img.shields.io/packagist/v/putyourlightson/craft-entry-count?label=stable)]((https://packagist.org/packages/putyourlightson/craft-entry-count))
+[![Total Downloads](https://img.shields.io/packagist/dt/putyourlightson/craft-entry-count)](https://packagist.org/packages/putyourlightson/craft-entry-count)
 
 <p align="center"><img width="180" src="https://putyourlightson.com/assets/logos/entry-count.svg"></p>
 
