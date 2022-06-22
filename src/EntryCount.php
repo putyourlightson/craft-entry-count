@@ -14,7 +14,7 @@ use putyourlightson\entrycount\variables\EntryCountVariable;
 use yii\base\Event;
 
 /**
- * @property EntryCountService $entryCount
+ * @property-read EntryCountService $entryCount
  * @property-read SettingsModel $settings
  */
 class EntryCount extends Plugin
