@@ -13,12 +13,12 @@ class EntryCountModel extends Model
     /**
      * @var int|null
      */
-    public ?int $id;
+    public ?int $id = null;
 
     /**
      * @var int|null
      */
-    public ?int $entryId;
+    public ?int $entryId = null;
 
     /**
      * @var int
@@ -28,12 +28,12 @@ class EntryCountModel extends Model
     /**
      * @var DateTime|null
      */
-    public ?DateTime $dateCreated;
+    public ?DateTime $dateCreated = null;
 
     /**
      * @var DateTime|null
      */
-    public ?DateTime $dateUpdated;
+    public ?DateTime $dateUpdated = null;
 
     /**
      * Define what is returned when model is converted to string
