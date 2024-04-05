@@ -7,6 +7,8 @@ namespace putyourlightson\entrycount\migrations;
 
 use Craft;
 use craft\db\Migration;
+use craft\db\Table;
+use putyourlightson\entrycount\records\EntryCountRecord;
 
 class Install extends Migration
 {
@@ -15,8 +17,8 @@ class Install extends Migration
      */
     public function safeUp(): bool
     {
-        if (!$this->db->tableExists('{{%entrycount}}')) {
-            $this->createTable('{{%entrycount}}', [
+        if (!$this->db->tableExists(EntryCountRecord::tableName())) {
+            $this->createTable(EntryCountRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'entryId' => $this->integer()->notNull(),
                 'count' => $this->integer()->defaultValue(0)->notNull(),
@@ -25,9 +27,9 @@ class Install extends Migration
                 'uid' => $this->uid(),
             ]);
 
-            $this->createIndex(null, '{{%entrycount}}', 'entryId', true);
+            $this->createIndex(null, EntryCountRecord::tableName(), 'entryId', true);
 
-            $this->addForeignKey(null, '{{%entrycount}}', 'entryId', '{{%elements}}', 'id', 'CASCADE');
+            $this->addForeignKey(null, EntryCountRecord::tableName(), 'entryId', Table::ELEMENTS, 'id', 'CASCADE');
 
             // Refresh the db schema caches
             Craft::$app->db->schema->refresh();
@@ -41,7 +43,7 @@ class Install extends Migration
      */
     public function safeDown(): bool
     {
-        $this->dropTableIfExists('{{%entrycount}}');
+        $this->dropTableIfExists(EntryCountRecord::tableName());
 
         return true;
     }

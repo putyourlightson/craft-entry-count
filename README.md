@@ -5,7 +5,7 @@
 
 # Entry Count Plugin for Craft CMS
 
-The Entry Count Plugin was built specifically for training purposes and is used in the [Craft Plugin Development video course](https://mijingo.com/products/screencasts/craft-plugin-development/).
+The Entry Count Plugin was built specifically for training purposes. It was used in the Craft Plugin Development video course by Mijingo, which has since been discontinued. The [Getting Started with Craft Plugin Development](https://craftquest.io/courses/how-to-create-craft-plugin) course on CraftQuest is a good alternative.
 
 It allows you to count and display the number of times that an entry has been viewed in  [Craft CMS](https://craftcms.com/). The plugin is intended for educational purposes and can be freely used for simple use-cases. For anything more complex, use the [View Count](https://www.doublesecretagency.com/plugins/view-count) plugin.
 
@@ -19,11 +19,11 @@ This plugin is licensed for free under the MIT License.
 
 ## Requirements
 
-This plugin requires [Craft CMS](https://craftcms.com/) 3.0.0 or later, or 4.0.0 or later.
+This plugin requires [Craft CMS](https://craftcms.com/) 3.0.0 or later, or 4.0.0 or later, or 5.0.0 or later.
 
 ## Installation
 
-To install the plugin, search for "Entry Count" in the Craft Plugin Store, or install manually using composer.
+To install the plugin, search for “Entry Count” in the Craft Plugin Store, or install manually using composer.
 
 ```shell
 composer require putyourlightson/craft-entry-count
@@ -31,4 +31,4 @@ composer require putyourlightson/craft-entry-count
 
 ---
 
-<small>Created by [PutYourLightsOn](https://putyourlightson.com/).</small>
+Created by [PutYourLightsOn](https://putyourlightson.com/).

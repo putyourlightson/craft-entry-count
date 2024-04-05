@@ -33,6 +33,7 @@ class EntryCountService extends Component
         $entryCountModel = new EntryCountModel();
 
         // Get record from DB
+        /** @var EntryCountRecord|null $entryCountRecord */
         $entryCountRecord = EntryCountRecord::find()
             ->where(['entryId' => $entryId])
             ->one();
@@ -51,6 +52,7 @@ class EntryCountService extends Component
     public function getEntries(): EntryQuery
     {
         // Get all records from DB ordered by count descending
+        /** @var EntryCountRecord[] $entryCountRecords */
         $entryCountRecords = EntryCountRecord::find()
             ->orderBy('count desc')
             ->all();
@@ -65,17 +67,17 @@ class EntryCountService extends Component
         // Return entry query
         return Entry::find()
             ->id($entryIds)
-//            ->site('*')
+            //            ->site('*')
             ->fixedOrder();
     }
 
     /**
      * Increment count
      */
-    public function increment(int $entryId)
+    public function increment(int $entryId): void
     {
         // Check if action should be ignored
-        if ($this->_ignoreAction()) {
+        if ($this->ignoreAction()) {
             return;
         }
 
@@ -87,9 +89,7 @@ class EntryCountService extends Component
         // If exists then increment count
         if ($entryCountRecord) {
             $entryCountRecord->setAttribute('count', $entryCountRecord->getAttribute('count') + 1);
-        }
-
-        // Otherwise create a new record
+        } // Otherwise create a new record
         else {
             $entryCountRecord = new EntryCountRecord();
             $entryCountRecord->setAttribute('entryId', $entryId);
@@ -103,7 +103,7 @@ class EntryCountService extends Component
     /**
      * Reset count
      */
-    public function reset(int $entryId)
+    public function reset(int $entryId): void
     {
         // Get record from DB
         $entryCountRecord = EntryCountRecord::find()
@@ -122,7 +122,6 @@ class EntryCountService extends Component
             'username' => Craft::$app->getUser()->getIdentity()->username,
         ]), 'EntryCount');
 
-
         // Fire a 'afterResetCount' event
         if ($this->hasEventHandlers(self::EVENT_AFTER_RESET_COUNT)) {
             $this->trigger(self::EVENT_AFTER_RESET_COUNT, new Event());
@@ -132,7 +131,7 @@ class EntryCountService extends Component
     /**
      * Check if action should be ignored
      */
-    private function _ignoreAction(): bool
+    private function ignoreAction(): bool
     {
         // Get plugin settings
         $settings = EntryCount::$plugin->settings;

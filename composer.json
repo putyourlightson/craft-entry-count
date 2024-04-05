@@ -1,31 +1,49 @@
 {
-    "name": "putyourlightson/craft-entry-count",
-    "description": "Counts and displays the number of times that an entry has been viewed.",
-    "version": "3.0.1",
-    "type": "craft-plugin",
-    "homepage": "https://putyourlightson.com/plugins/entry-count",
-    "license": "MIT",
-    "require": {
-        "php": "^8.0.2",
-        "craftcms/cms": "^4.0"
-    },
-    "autoload": {
-        "psr-4": {
-          "putyourlightson\\entrycount\\": "src/"
-        }
-    },
-    "support": {
-        "docs": "https://putyourlightson.com/plugins/entry-count",
-        "source": "https://github.com/putyourlightson/craft-entry-count",
-        "issues": "https://github.com/putyourlightson/craft-entry-count/issues"
-    },
-    "extra": {
-        "name": "Entry Count",
-        "handle": "entry-count",
-        "developer": "PutYourLightsOn",
-        "developerUrl": "https://putyourlightson.com/",
-        "documentationUrl": "https://putyourlightson.com/plugins/entry-count",
-        "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-entry-count/v3/CHANGELOG.md",
-        "class": "putyourlightson\\entrycount\\EntryCount"
+  "name": "putyourlightson/craft-entry-count",
+  "description": "Counts and displays the number of times that an entry has been viewed.",
+  "version": "4.0.0",
+  "type": "craft-plugin",
+  "homepage": "https://putyourlightson.com/plugins/entry-count",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "craftcms/cms": "^5.0"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "putyourlightson\\entrycount\\": "src/"
     }
+  },
+  "scripts": {
+    "phpstan": "phpstan --ansi --memory-limit=1G",
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --fix --ansi"
+  },
+  "config": {
+    "allow-plugins": {
+      "craftcms/plugin-installer": true,
+      "pestphp/pest-plugin": true,
+      "yiisoft/yii2-composer": true
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "support": {
+    "docs": "https://putyourlightson.com/plugins/entry-count",
+    "source": "https://github.com/putyourlightson/craft-entry-count",
+    "issues": "https://github.com/putyourlightson/craft-entry-count/issues"
+  },
+  "extra": {
+    "name": "Entry Count",
+    "handle": "entry-count",
+    "developer": "PutYourLightsOn",
+    "developerUrl": "https://putyourlightson.com/",
+    "documentationUrl": "https://putyourlightson.com/plugins/entry-count",
+    "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-entry-count/4.x/CHANGELOG.md",
+    "class": "putyourlightson\\entrycount\\EntryCount"
+  }
 }
