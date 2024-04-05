@@ -5,9 +5,9 @@
 
 # Entry Count Plugin for Craft CMS
 
-The Entry Count Plugin was built specifically for training purposes. It was used in the Craft Plugin Development video course by Mijingo, which has since been discontinued. The [Getting Started with Craft Plugin Development](https://craftquest.io/courses/how-to-create-craft-plugin) course on CraftQuest is a good alternative.
+The Entry Count Plugin was built specifically for the Craft Plugin Development video course by Mijingo, which has since been discontinued. The [Getting Started with Craft Plugin Development](https://craftquest.io/courses/how-to-create-craft-plugin) course on CraftQuest is a good alternative.
 
-It allows you to count and display the number of times that an entry has been viewed in  [Craft CMS](https://craftcms.com/). The plugin is intended for educational purposes and can be freely used for simple use-cases. For anything more complex, use the [View Count](https://www.doublesecretagency.com/plugins/view-count) plugin.
+It allows you to count and display the number of times an entry has been viewed in  [Craft CMS](https://craftcms.com/). The plugin is intended for educational purposes and can be freely used for simple use-cases. For anything more complex, use the [View Count](https://www.doublesecretagency.com/plugins/view-count) plugin.
 
 ## Documentation
 
