@@ -1,7 +1,7 @@
 [![Stable Version](https://img.shields.io/packagist/v/putyourlightson/craft-entry-count?label=stable)]((https://packagist.org/packages/putyourlightson/craft-entry-count))
 [![Total Downloads](https://img.shields.io/packagist/dt/putyourlightson/craft-entry-count)](https://packagist.org/packages/putyourlightson/craft-entry-count)
 
-<p align="center"><img width="180" src="https://putyourlightson.com/assets/logos/entry-count.svg"></p>
+<p align="center"><img width="130" src="https://putyourlightson.com/assets/logos/entry-count.svg"></p>
 
 # Entry Count Plugin for Craft CMS
 

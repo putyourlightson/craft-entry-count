@@ -43,7 +43,7 @@
     "developer": "PutYourLightsOn",
     "developerUrl": "https://putyourlightson.com/",
     "documentationUrl": "https://putyourlightson.com/plugins/entry-count",
-    "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-entry-count/4.x/CHANGELOG.md",
+    "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-entry-count/develop/CHANGELOG.md",
     "class": "putyourlightson\\entrycount\\EntryCount"
   }
 }
